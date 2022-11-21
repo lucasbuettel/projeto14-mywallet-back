@@ -2,8 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import joi from "joi";
-import bcrypt from "bcrypt";
-import { v4 as uuidV4 } from 'uuid';
+
 import authRouters from "./routes/authRoutes.js"
 import entracesRoutes from "./routes/entracesRoutes.js"
 import outputsRouters from "./routes/outputsRoutes.js"
