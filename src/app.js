@@ -17,13 +17,13 @@ export const userSchema = joi.object({
 
 export const entraceSchema = joi.object({
     value: joi.number().required(),
-    description: joi.string().min(2).required()
+    description: joi.string().max(20).required()
 })
 
 
 export const outputSchema = joi.object({
     value: joi.number().required(),
-    description: joi.string().min(2).required()
+    description: joi.string().max(20).required()
 })
 
 const app = express();

@@ -4,14 +4,15 @@ import { userSchema } from '../app.js';
 import bcrypt from "bcrypt";
 
 
-const dataUserCollection = db.collection("usersData")
+const dataUserCollection = db.collection("usersData");
+const sessionCollection = db.collection("session");
 
 
 export async function postSingUp(req, res){
     
 
         const {name, email, password, checkPassword} = req.body;
-        const token = uuidV4();
+        
     
         const user = {
             name,
@@ -68,19 +69,29 @@ export async function postSingUp(req, res){
 
 export async function postLogin(req, res){
     const {email, password} = req.body;
+    const token = uuidV4();
 
     try{
         const userExists = await dataUserCollection.findOne({email});
         if(!userExists){
-            return sendStatus(401);
+            return res.sendStatus(401);
         }
         const passwordOk = bcrypt.compareSync(password, userExists.password);
+
+        const IdUserExists = await dataUserCollection.findOne({id: userExists._id});
+
+        if(IdUserExists){
+            return res.sendStatus(409);
+        }
+
+        await sessionCollection.insertOne({token, id:userExists._id});
+
 
         if(!passwordOk){
             return res.sendStatus(401);
         }
 
-        res.send({message: `Olá, ${userExists.name} seja bem vindo(a)`})
+        res.send({token});
 
     } catch(err){
         console.log(err);
