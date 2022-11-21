@@ -1,4 +1,4 @@
-/* import { MongoClient } from "mongodb";
+import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -11,5 +11,5 @@ try {
     console.log("Erro no mongo.conect", err.message);
     }
 
-    const db = mongoClient.db("MyWallet");
- */
+export    const db = mongoClient.db("MyWallet");
+
